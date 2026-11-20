@@ -15,7 +15,7 @@ Estructura de Datos · Evaluacion C2 · Unidad 4 · 2026-20 · NRC `<NRC>` · Gr
 |  |  | Lider (scrum) |  |
 | NIELSEN ERICSON LARICO PUMA | wheildnn04 | Dev · arbol | R1, R2 |
 | ELMER RODRIGO ARIAS QUISPE | 60556224-cibernético | Dev · grafo | R3, R4 |
-| EDIK BENJAMIN PACHACUTE CORDOVA |  | Dev · alcance y archivo | R5, R6 |
+| EDIK BENJAMIN PACHACUTE CORDOVA | beny-0408 | Dev · alcance y archivo | R5, R6 |
 |  |  | QA y documentacion | R7, pruebas |
 
 Tablero del equipo: `<enlace a GitHub Projects>` · Presentacion: `<enlace>`

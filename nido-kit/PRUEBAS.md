@@ -4,7 +4,7 @@
 |---|---|---|---|---|---|
 | P01 | R1 | `registrar @volt` (dos veces) | La segunda vez: `E: No se pudo registrar @volt` | `E: No se pudo registrar @volt` | `ok` |
 | P02 | R1 | `registrar volt` (sin @) | `E: No se pudo registrar volt` | `E: No se pudo registrar volt`  |`ok`  |
-| P03 | R2 |  |  |  |  |
+| P03 | R2 | `arbol`, `usuarios` |Preorden y enorden correctos; 10 nodos, altura 5 y 4 hojas   | Recorridos correctos; 10 nodos, altura 5 y 4 hojas | ok |
 | P04 | R3 | `seguir @a @a` | `E: Una cuenta no puede seguirse a si misma` |  |  |
 | P05 | R4 |  |  |  |  |
 | P06 | R5 |  |  |  |  |

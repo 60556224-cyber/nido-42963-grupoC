@@ -116,6 +116,10 @@ void enorden(NodoUsuario *r) {
 
 void preorden(NodoUsuario *r) {
     // TODO R2b
+    if (r==nullptr )return;
+    cout<<" "<< r->usuario;
+    preorden(r->izq);
+    preorden(r->der);
 }
 
 int contar(NodoUsuario *r) {

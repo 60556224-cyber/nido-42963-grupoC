@@ -124,12 +124,21 @@ void preorden(NodoUsuario *r) {
 
 int contar(NodoUsuario *r) {
     // TODO R2c
-    return 0;
+    if(r==nullptr)return 0;
+    return 1+ contar (r->izq) + contar (r->der);
+
 }
 
 int altura(NodoUsuario *r) {
     // TODO R2d
-    return 0;
+    if(r==nullptr)return 0;
+    
+    int a= altura(r->izq);
+    int b= altura(r->der);
+    
+    if (a>b)return 1+a;
+    
+    return 1+b;
 }
 
 int hojas(NodoUsuario *r) {

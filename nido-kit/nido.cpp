@@ -108,6 +108,10 @@ bool registrarUsuario(NodoUsuario *&raiz, string u) {
 
 void enorden(NodoUsuario *r) {
     // TODO R2a
+    if (r==nullptr) return;
+    enorden(r->izq);
+    cout <<" "<<r->	usuario;
+    enorden(r->der);
 }
 
 void preorden(NodoUsuario *r) {

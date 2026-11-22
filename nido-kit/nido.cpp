@@ -80,7 +80,15 @@ NodoUsuario* buscar(NodoUsuario *r, string u) {
 
 bool insertar(NodoUsuario *&r, NodoUsuario *nuevo) {
     // TODO R1b
-    return false;
+    if (r==nullptr){
+    	r=nuevo;
+    	return true;
+    }
+    if(nuevo ->usuario == r->usuario) return false;
+    if(nuevo->usuario < r->usuario)
+    	return insertar (r->izq, nuevo);
+    	
+    return insertar (r->der,nuevo);
 }
 
 bool registrarUsuario(NodoUsuario *&raiz, string u) {

@@ -2,8 +2,8 @@
 
 | ID | Requisito | Orden o secuencia | Resultado esperado | Resultado obtenido | OK |
 |---|---|---|---|---|---|
-| P01 | R1 | `registrar @kiwi` (dos veces) | La segunda vez: `E: No se pudo registrar @kiwi` |  |  |
-| P02 | R1 | `registrar kiwi` (sin @) | `E: No se pudo registrar kiwi` |  |  |
+| P01 | R1 | `registrar @volt` (dos veces) | La segunda vez: `E: No se pudo registrar @volt` | `E: No se pudo registrar @volt` | `ok` |
+| P02 | R1 | `registrar volt` (sin @) | `E: No se pudo registrar volt` | `E: No se pudo registrar volt`  |`ok`  |
 | P03 | R2 |  |  |  |  |
 | P04 | R3 | `seguir @a @a` | `E: Una cuenta no puede seguirse a si misma` |  |  |
 | P05 | R4 |  |  |  |  |

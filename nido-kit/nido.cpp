@@ -143,7 +143,12 @@ int altura(NodoUsuario *r) {
 
 int hojas(NodoUsuario *r) {
     // TODO R2e
-    return 0;
+    if (r == nullptr) return 0;
+
+    if (r->izq == nullptr && r->der == nullptr)
+        return 1;
+
+    return hojas(r->izq) + hojas(r->der);
 }
 
 /* ---------- Grafo dirigido: matriz de adyacencia sigue ---------- */

@@ -161,7 +161,14 @@ int contarSiguiendo(int id) {
 
 int contarSeguidores(int id) {
     // TODO R3a
-    return 0;
+	int contador = 0;
+
+	for (int i = 0; i < nUsuarios; i++) {
+		if (sigue[i][id] == 1) {
+			contador++;
+		}
+	}
+    return contador;
 }
 
 void difundir(int v, bool visto[], bool imprimir) {
@@ -283,9 +290,37 @@ int main() {
         }
         else if (orden == "seguir") {
             // TODO R3b
+			NodoUsuario *a = buscar(raiz, a1);
+			NodoUsuario *b = buscar(raiz, a2);
+			if (a == nullptr || b == nullptr) {
+				cout << "E: no existe uno de los usuarios" << endl;
+			}
+			else if (a->id == b->id) {
+				cout << "E: no puedes seguirte a ti mismo" << endl;
+			}
+			else if (sigue[a->id][b->id] == 1) {
+				cout << "E: ya sigues a" << a2 << endl;
+			}
+			else {
+				sigue[a->id][b->id] = 1; 
+				cout << a1 << " ahora sigue a " << a2 <<endl;
+			}
         }
         else if (orden == "dejar") {
             // TODO R3c
+			NodoUsuario *a = buscar(raiz, a1);
+			NodoUsuario *b = buscar(raiz, a2);
+
+			if (a == nullptr || b == nullptr) {
+				cout << "E: no existe uno de los usuarios" << endl;
+			}
+			else if (sigue[a->id][b->id] == 0) {
+				cout << "E: no sigues a " << a2 << endl;
+			}
+			else {
+				sigue[a->id][b->id] = 0;
+					cout << a1 << " dejo de seguir a " << a2 << endl;
+			}
         }
         else if (orden == "siguiendo") {
             NodoUsuario *u = buscar(raiz, a1);
@@ -298,12 +333,60 @@ int main() {
         }
         else if (orden == "seguidores") {
             // TODO R3d
+			NodoUsuario *u = buscar(raiz, a1);
+
+			if (u == nullptr) {
+				cout << "E: no existe " << a1 << endl;
+			}
+			else {
+				bool marca[MAX] = {false};
+
+				for (int x = 0; x < nUsuarios; x++) {
+					if (sigue[x][u->id] == 1) {
+						marca[x] = true;
+					}
+				}
+
+				imprimirMarcados("Seguidores de " + u->usuario, marca);
         }
         else if (orden == "mutuos") {
             // TODO R4a
+			NodoUsuario *u = buscar(raiz, a1);
+
+			if (u == nullptr) {
+				cout << "E: No existe " << a1 << endl;
+			}
+			else {
+				bool marca[MAX] = {false};
+
+				for (int x = 0; x < nUsuarios; x++) {
+					if (sigue[u->id][x] == 1 && sigue[x][u->id] == 1) {
+						marca[x] = true;
+					}
+				}
+
+				imprimirMarcados ("Mutuos de " + u->usuario, marca);
         }
         else if (orden == "popular") {
             // TODO R4b
+			if (nUsuarios == 0) {
+				cout << "Popular: (sin cuentas)" << endl;
+			}
+			else {
+				int idPopular = 0;
+				int maximo = contarSeguidores(0);
+
+				for (int i = 1; i < nUsuarios; i++) {
+					int cantidad = contarSeguidores(i);
+
+					if (cantidad > maximo) {
+						maximo = cantidad;
+						idPopular = i; 
+					}
+				}
+
+				cout << "Popular: " << porId[idPopular]->usuario;
+				cout << " | seguidores: " << maximo << endl;
         }
         else if (orden == "alcance") {
             // TODO R5b

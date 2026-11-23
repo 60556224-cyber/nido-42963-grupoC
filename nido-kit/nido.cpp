@@ -348,6 +348,7 @@ int main() {
 				}
 
 				imprimirMarcados("Seguidores de " + u->usuario, marca);
+			}
         }
         else if (orden == "mutuos") {
             // TODO R4a
@@ -366,6 +367,7 @@ int main() {
 				}
 
 				imprimirMarcados ("Mutuos de " + u->usuario, marca);
+			}
         }
         else if (orden == "popular") {
             // TODO R4b
@@ -387,6 +389,7 @@ int main() {
 
 				cout << "Popular: " << porId[idPopular]->usuario;
 				cout << " | seguidores: " << maximo << endl;
+			}
         }
         else if (orden == "alcance") {
             // TODO R5b

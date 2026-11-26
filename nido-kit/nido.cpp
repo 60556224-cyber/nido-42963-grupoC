@@ -175,12 +175,23 @@ int contarSeguidores(int id) {
 
 void difundir(int v, bool visto[], bool imprimir) {
     // TODO R5a
+	visto[v] = true;
+    for (int x = 0; x < nUsuarios; x++) {
+        if (sigue[x][v] == 1 && !visto[x]) {
+            if (imprimir) cout << " " << porId[x]->usuario;
+            difundir(x, visto, imprimir);
+        }
+    }
 }
 
 /* ---------- Archivos y memoria ---------- */
 
 void guardarPreorden(NodoUsuario *r, ofstream &f) {
     // TODO R6a
+	if (r == nullptr) return;                          
+    f << "U " << r->usuario << " " << r->id << endl;   
+    guardarPreorden(r->izq, f);                        
+    guardarPreorden(r->der, f);
 }
 
 int liberar(NodoUsuario *r) {
@@ -395,15 +406,45 @@ int main() {
         }
         else if (orden == "alcance") {
             // TODO R5b
+			NodoUsuario *u = buscar(raiz, a1);
+            if (a1 == "") cout << "Uso: alcance @usuario" << endl;
+            else if (u == nullptr) cout << "E: No existe " << a1 << endl;
+            else {
+                bool visto[MAX] = {false};
+                cout << "Alcance de " << u->usuario << ":";
+                difundir(u->id, visto, true);
+                int k = 0;
+                for (int x = 0; x < nUsuarios; x++) if (visto[x]) k++;
+                if (k - 1 == 0) cout << " (nadie)";
+                cout << " | alcanzados: " << k - 1 << endl;
+            }
         }
         else if (orden == "llega") {
             // TODO R5c
+			NodoUsuario *a = buscar(raiz, a1);
+            NodoUsuario *b = buscar(raiz, a2);
+            if (a1 == "" || a2 == "") cout << "Uso: llega @a @b" << endl;
+            else if (a == nullptr) cout << "E: No existe " << a1 << endl;
+            else if (b == nullptr) cout << "E: No existe " << a2 << endl;
+            else if (a->id == b->id) cout << "E: Elijan dos cuentas distintas" << endl;
+            else {
+                bool visto[MAX] = {false};
+                difundir(a->id, visto, false);
+                cout << "Un post de " << a1 << " llega a " << a2 << ": "
+                     << (visto[b->id] ? "si" : "no") << endl;
+            }
         }
         else if (orden == "guardar") {
             ofstream f(ARCHIVO);
             int m = 0;
             guardarPreorden(raiz, f);
             // TODO R6b
+			for (int a = 0; a < nUsuarios; a++)
+                for (int b = 0; b < nUsuarios; b++)
+                    if (sigue[a][b] == 1) {
+                        f << "S " << porId[a]->usuario << " " << porId[b]->usuario << endl;
+                        m++;
+                    }
             f.close();
             cout << "Guardado: " << contar(raiz) << " cuentas y " << m << " seguimientos en " << ARCHIVO << endl;
         }
@@ -413,6 +454,37 @@ int main() {
             else {
                 int m = 0;
                 // TODO R6c
+				liberar(raiz); raiz = nullptr; nUsuarios = 0;
+                for (int i = 0; i < MAX; i++) {
+                    porId[i] = nullptr;
+                    for (int j = 0; j < MAX; j++) sigue[i][j] = 0;
+                }
+                // reconstruir desde el archivo
+                string tipo;
+                while (f >> tipo) {
+                    if (tipo == "U") {
+                        string u; int id;
+                        f >> u >> id;
+                        if (id >= 0 && id < MAX) {
+                            NodoUsuario *n = crearUsuario(u, id);
+                            if (insertar(raiz, n)) {
+                                porId[id] = n;
+                                if (id + 1 > nUsuarios) nUsuarios = id + 1;
+                            }
+                            else delete n;
+                        }
+                    }
+                    else if (tipo == "S") {
+                        string ua, ub;
+                        f >> ua >> ub;
+                        NodoUsuario *a = buscar(raiz, ua);
+                        NodoUsuario *b = buscar(raiz, ub);
+                        if (a != nullptr && b != nullptr) {
+                            sigue[a->id][b->id] = 1;
+                            m++;
+                        }
+                    }
+                }
                 cout << "Cargado: " << contar(raiz) << " cuentas y " << m << " seguimientos | altura "
                      << altura(raiz) << endl;
             }
